@@ -9,22 +9,18 @@ app.get("/", (req, res) => {
     res.sendFile("index.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
     //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
 });
-app.get("/signup.html", (req, res) => {
-    //get requests to the root ("/") will route here
-    res.sendFile("signup.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
-    //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
-  });
-app.get("/forgotpwd.html", (req, res) => {
-    //get requests to the root ("/") will route here
-    res.sendFile("forgotpwd.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
-    //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
-});
+
 app.get("/home.html", (req, res) => {
     //get requests to the root ("/") will route here
     res.sendFile("home.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
     //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
 });
-app.get("/index.html", (req, res) => {
+app.get("/project.html", (req, res) => {
+    //get requests to the root ("/") will route here
+    res.sendFile("home.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
+    //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
+});
+app.get("/registration.html", (req, res) => {
     //get requests to the root ("/") will route here
     res.sendFile("index.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
     //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
