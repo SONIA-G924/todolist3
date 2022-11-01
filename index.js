@@ -1,33 +1,49 @@
-const express = require("express"); //Import the express dependency
-const app = express(); //Instantiate an express app, the main work horse of this server
-const port = 5000; //Save the port number where your server will be listening
+const http = require("http");
+const fs = require("fs");
+var argv=require("minimist")(process.argv.slice(2));
+console.log(argv);
+let homeContent = "";
+let projectContent = "";
+let registrationcontent="";
 
-//Idiomatic expression in express to route and respond to a client request
-
-app.get("/", (req, res) => {
-    //get requests to the root ("/") will route here
-    res.sendFile("index.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
-    //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
+fs.readFile("home.html", (err, home) => {
+  if (err) {
+    throw err;
+  }
+  homeContent = home;
 });
 
-app.get("/home.html", (req, res) => {
-    //get requests to the root ("/") will route here
-    res.sendFile("home.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
-    //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
-});
-app.get("/project.html", (req, res) => {
-    //get requests to the root ("/") will route here
-    res.sendFile("home.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
-    //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
-});
-app.get("/registration.html", (req, res) => {
-    //get requests to the root ("/") will route here
-    res.sendFile("index.html", { root: __dirname }); //server responds by sending the index.html file to the client's browser
-    //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
+fs.readFile("project.html", (err, project) => {
+  if (err) {
+    throw err;
+  }
+  projectContent = project;
 });
 
+fs.readFile("registration.html", (err, registration) => {
+    if (err) {
+      throw err;
+    }
+    registrationContent = registration;
+  });
 
-app.listen(port, () => {
-  //server starts listening for any attempts from a client to connect at port: {port}
-  console.log(`Now listening on port ${port}`);
-});
+http
+  .createServer((request, response) => {
+    let url = request.url;
+    response.writeHeader(200, { "Content-Type": "text/html" });
+    switch (url) {
+      case "/project":
+        response.write(projectContent);
+        response.end();
+        break;
+      case "/registration":
+        response.write(registrationContent);
+        response.end();
+        break;
+      default:
+        response.write(homeContent);
+        response.end();
+        break;
+    }
+  })
+  .listen(argv['port']);
